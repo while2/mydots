@@ -28,5 +28,5 @@ alias slay="slay"
 
 alias hig="history | grep"
 alias psg="ps aux | grep"
-alias tailf="tailf -f"
+alias tailf="tail -f"
 
