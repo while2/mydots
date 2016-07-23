@@ -30,4 +30,4 @@ alias hig="history | grep"
 alias psg="ps aux | grep"
 alias tailf="tail -f"
 
-alias tb="function _tb(){ tensorboard --logdir=$1;};_tb"
+alias tb='function _tb(){ tensorboard --logdir=$1;};_tb'
