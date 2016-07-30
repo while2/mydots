@@ -20,8 +20,8 @@ slay() {
   if [ -z "$1" ];then
     echo "Give me a name or should I slay them all?"
   else
-    ps aux | grep -v grep | grep ^`whoami` | grep name=$1
-    ps aux | grep -v grep | grep ^`whoami` | grep name=$1 | awk '{print $2}' | xargs kill
+    ps aux | grep -v grep | grep ^`whoami` | grep hint=$1
+    ps aux | grep -v grep | grep ^`whoami` | grep hint=$1 | awk '{print $2}' | xargs kill
   fi
 }
 alias slay="slay"
