@@ -1,6 +1,10 @@
 remove() {
   for file in $@; do
-    fullpath=`pwd`/$file
+    if [[ $file == /* ]]; then
+      fullpath=$file
+    else
+      fullpath=$(pwd)/$file
+    fi
     dir=`dirname $fullpath`
     filename=`basename $fullpath`
     base=$HOME/.trash/$dir
