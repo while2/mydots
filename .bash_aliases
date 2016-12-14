@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# move file to ~/.trash dir instead of really remove them
 remove() {
   for file in "$@"; do
     if [[ $file == /* ]]; then
@@ -20,10 +21,17 @@ remove() {
 }
 alias rm="remove"
 
+list() {
+  ls "$HOME/.trash/$(pwd)"
+}
+alias lsrm="list"
+
 restore() {
   mv "$HOME/.trash/$(pwd)/$1" ./
 }
 alias re="restore"
+
+
 
 slay() {
   if [ -z "$1" ];then
