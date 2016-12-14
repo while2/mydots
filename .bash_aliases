@@ -1,22 +1,27 @@
+#!/usr/bin/env bash
+
 remove() {
-  for file in $@; do
+  for file in "$@"; do
     if [[ $file == /* ]]; then
       fullpath=$file
     else
       fullpath=$(pwd)/$file
     fi
-    dir=`dirname $fullpath`
-    filename=`basename $fullpath`
+    dir=$(dirname "$fullpath")
+    filename=$(basename "$fullpath")
     base=$HOME/.trash/$dir
-    /bin/rm -rf $base/$filename
-    mkdir -p $base
-    mv -f $fullpath $base/
+    if [[ -f $base ]]; then
+      /bin/rm "$base"
+    fi
+    /bin/rm -rf "${base:?}/$filename"
+    mkdir -p "$base"
+    mv -f "$fullpath" "$base"/
   done
 }
 alias rm="remove"
 
 restore() {
-  mv $HOME/.trash/`pwd`/$1 ./
+  mv "$HOME/.trash/$(pwd)/$1" ./
 }
 alias re="restore"
 
@@ -24,8 +29,8 @@ slay() {
   if [ -z "$1" ];then
     echo "Give me a name or should I slay them all?"
   else
-    ps aux | grep -v grep | grep ^`whoami` | grep hint=$1
-    ps aux | grep -v grep | grep ^`whoami` | grep hint=$1 | awk '{print $2}' | xargs kill
+    px aux | grep -v grep | grep $(whoami) | grep hint=$1
+    ps aux | grep -v grep | grep $(whoami) | grep hint=$1 | awk '{print $2}' | xargs kill
   fi
 }
 alias slay="slay"
