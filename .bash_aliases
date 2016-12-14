@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # move file to ~/.trash dir instead of really remove them
-remove() {
+rm() {
   for file in "$@"; do
     if [[ $file == /* ]]; then
       fullpath=$file
@@ -19,32 +19,38 @@ remove() {
     mv -f "$fullpath" "$base"/
   done
 }
-alias rm="remove"
+alias rm="rm"
 
-list() {
+lsrm() {
   ls "$HOME/.trash/$(pwd)"
 }
-alias lsrm="list"
+alias lsrm="lsrm"
 
-restore() {
+re() {
   mv "$HOME/.trash/$(pwd)/$1" ./
 }
-alias re="restore"
+alias re="re"
 
+psg() {
+  cmd="ps aux | grep -v grep"
+  for key in "$@"; do
+    cmd=$cmd" | grep $key"
+  done
+  eval "$cmd"
+}
+alias psg="psg"
 
-
-slay() {
+psgk() {
   if [ -z "$1" ];then
     echo "Give me a name or should I slay them all?"
   else
-    px aux | grep -v grep | grep $(whoami) | grep hint=$1
-    ps aux | grep -v grep | grep $(whoami) | grep hint=$1 | awk '{print $2}' | xargs kill
+    eval psg "$(whoami)" "$@"
+    eval psg "$(whoami)" "$@" | awk '{print $2}' | xargs kill
   fi
 }
-alias slay="slay"
+alias slay="psgk"
 
 alias hig="history | grep"
-alias psg="ps aux | grep"
 alias tailf="tail -f"
 
 alias tb='function _tb(){ tensorboard --logdir=$1;};_tb'
